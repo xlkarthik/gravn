@@ -1,0 +1,50 @@
+# Business documents stay out of the code repo (D-04)
+/archive/
+/*.pdf
+/*.docx
+/*.pptx
+/*.png
+/Gravn_*.html
+/Gravn_*.md
+/Gravn_*.txt
+
+# Dependencies and build output
+node_modules/
+.pnpm-store/
+dist/
+build/
+.next/
+out/
+*.tsbuildinfo
+coverage/
+
+# Expo / React Native
+.expo/
+apps/mobile/android/
+apps/mobile/ios/
+*.jks
+*.keystore
+*.p8
+*.p12
+*.mobileprovision
+
+# Supabase
+supabase/.branches/
+supabase/.temp/
+
+# Env files and secrets (commit only .env.example)
+.env
+.env.*
+!.env.example
+
+# Tests
+test-results/
+playwright-report/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.tmp/
+.serena/

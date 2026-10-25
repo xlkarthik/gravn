@@ -1,0 +1,7 @@
+plan/
+archive/
+pnpm-lock.yaml
+packages/shared/src/database.types.ts
+apps/mobile/android/
+apps/mobile/ios/
+.next/

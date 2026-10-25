@@ -1,0 +1,10 @@
+<h2>Welcome to Gravn</h2>
+<p>Confirm your email address to finish creating your account.</p>
+<p>
+  <a
+    href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email&next={{ .RedirectTo }}"
+  >
+    Confirm my email
+  </a>
+</p>
+<p>If you didn't sign up for Gravn, you can ignore this email.</p>

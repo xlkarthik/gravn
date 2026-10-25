@@ -1,0 +1,22 @@
+{
+  "name": "@gravn/shared",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "lint": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "i18next": "26.4.2",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@supabase/supabase-js": "2.118.0",
+    "typescript": "~6.0.3",
+    "vitest": "5.0.3"
+  }
+}
