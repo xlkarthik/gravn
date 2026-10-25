@@ -53,6 +53,9 @@ export function authErrorKey(error: { code?: string } | null): string {
   switch (error?.code) {
     case 'invalid_credentials':
       return 'sign_in_failed';
+    case 'user_already_exists':
+    case 'email_exists':
+      return 'user_already_exists';
     case 'email_not_confirmed':
       return 'email_not_confirmed';
     case 'weak_password':

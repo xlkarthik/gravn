@@ -39,6 +39,7 @@
     "invalid_ops": "Invalid sync payload.",
     "unknown_op_type": "Unsupported sync operation.",
     "sign_in_failed": "That email and password don't match. Try again or reset your password.",
+    "user_already_exists": "An account with this email already exists. Try signing in instead.",
     "email_not_confirmed": "Confirm your email first. Check your inbox for the link.",
     "weak_password": "Choose a stronger password: at least 8 characters with letters and numbers.",
     "rate_limited": "Too many attempts. Wait a minute and try again.",

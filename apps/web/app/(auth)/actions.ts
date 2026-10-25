@@ -36,7 +36,7 @@ export async function signUp(_: FormState, formData: FormData): Promise<FormStat
   const { displayName, email, password } = parsed.data;
   // The confirmation email links back to `next` (for example an invitation) after verifying.
   const next = safeNext(formData.get('next'), '/verified');
-  const { error } = await (
+  const { data, error } = await (
     await supabase()
   ).auth.signUp({
     email,
@@ -47,6 +47,9 @@ export async function signUp(_: FormState, formData: FormData): Promise<FormStat
     },
   });
   if (error) return failed(authErrorKey(error), formData);
+  if (data.session) {
+    redirect(safeNext(formData.get('next'), '/home'));
+  }
   return { notice: t('auth.confirm_sent', { email }) };
 }
 
