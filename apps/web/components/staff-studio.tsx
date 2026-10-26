@@ -185,12 +185,24 @@ export function StaffStudio({
 
       {/* Mobile Sticky Top Header */}
       <header className="mobile-ws-topbar">
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <span className="wordmark">GRAVN</span>
-          <span className="lux-tag">{workspace.name}</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, minWidth: 0, flex: 1 }}>
+          <span className="wordmark" style={{ flexShrink: 0 }}>
+            GRAVN
+          </span>
+          <span
+            className="lux-tag"
+            style={{
+              maxWidth: 140,
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              display: 'inline-block',
+            }}
+          >
+            {workspace.name}
+          </span>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
           {otherWorkspaces.slice(0, 1).map((w) => (
             <Link
               key={w.id}
