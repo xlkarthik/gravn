@@ -91,6 +91,30 @@ interface ThumbProps {
   interactive?: boolean;
 }
 
+export function resolveHumanGifUrl(name: string, demoUrl?: string | null): string | null {
+  if (
+    demoUrl &&
+    (demoUrl.startsWith('http://') || demoUrl.startsWith('https://') || demoUrl.startsWith('/'))
+  ) {
+    return demoUrl;
+  }
+  const n = name.toLowerCase();
+  if (
+    n.includes('incline') &&
+    (n.includes('bench') || n.includes('press'))
+  ) {
+    return '/exercises/incline-bench-press.gif';
+  }
+  if (
+    n.includes('bench press') ||
+    n.includes('dumbbell press') ||
+    n.includes('chest press')
+  ) {
+    return '/exercises/flat-bench-press.gif';
+  }
+  return null;
+}
+
 export function ExerciseGif({
   name,
   primaryMuscle,
@@ -103,12 +127,8 @@ export function ExerciseGif({
   const [openModal, setOpenModal] = useState(false);
   const [imgFailed, setImgFailed] = useState(false);
 
-  const hasCustomGif =
-    Boolean(demoUrl) &&
-    !imgFailed &&
-    (demoUrl!.startsWith('http://') ||
-      demoUrl!.startsWith('https://') ||
-      demoUrl!.startsWith('/'));
+  const resolvedGifUrl = resolveHumanGifUrl(name, demoUrl);
+  const hasCustomGif = Boolean(resolvedGifUrl) && !imgFailed;
 
   const pattern = classifyExercisePattern(name, primaryMuscle);
 
@@ -133,7 +153,7 @@ export function ExerciseGif({
         {hasCustomGif ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            src={demoUrl!}
+            src={resolvedGifUrl!}
             alt={name}
             onError={() => setImgFailed(true)}
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
@@ -178,7 +198,7 @@ export function ExerciseGif({
                 className="gravn-gif-stage"
                 style={{
                   width: '100%',
-                  height: 220,
+                  height: hasCustomGif ? 280 : 220,
                   borderRadius: 16,
                   background:
                     'radial-gradient(60% 60% at 50% 50%, rgba(255, 46, 31, 0.16) 0%, rgba(10, 12, 16, 0.98) 75%)',
@@ -193,9 +213,9 @@ export function ExerciseGif({
                 {hasCustomGif ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
-                    src={demoUrl!}
+                    src={resolvedGifUrl!}
                     alt={name}
-                    style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   />
                 ) : (
                   <div style={{ width: 185, height: 185 }}>
