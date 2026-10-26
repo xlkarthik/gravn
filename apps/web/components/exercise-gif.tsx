@@ -92,25 +92,24 @@ interface ThumbProps {
 }
 
 export function resolveHumanGifUrl(name: string, demoUrl?: string | null): string | null {
+  const n = name.toLowerCase();
+  if (n.includes('incline') && n.includes('dumbbell') && (n.includes('bench') || n.includes('press'))) {
+    return '/exercises/incline-dumbbell-press.gif';
+  }
+  if (n.includes('incline') && (n.includes('bench') || n.includes('press'))) {
+    return '/exercises/incline-bench-press.gif';
+  }
+  if (n.includes('dumbbell') && (n.includes('bench press') || n.includes('chest press'))) {
+    return '/exercises/dumbbell-bench-press.gif';
+  }
+  if (n.includes('bench press') || n.includes('dumbbell press') || n.includes('chest press')) {
+    return '/exercises/flat-bench-press.gif';
+  }
   if (
     demoUrl &&
     (demoUrl.startsWith('http://') || demoUrl.startsWith('https://') || demoUrl.startsWith('/'))
   ) {
     return demoUrl;
-  }
-  const n = name.toLowerCase();
-  if (
-    n.includes('incline') &&
-    (n.includes('bench') || n.includes('press'))
-  ) {
-    return '/exercises/incline-bench-press.gif';
-  }
-  if (
-    n.includes('bench press') ||
-    n.includes('dumbbell press') ||
-    n.includes('chest press')
-  ) {
-    return '/exercises/flat-bench-press.gif';
   }
   return null;
 }
