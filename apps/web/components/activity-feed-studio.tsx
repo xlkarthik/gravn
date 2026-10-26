@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation';
 import { useMemo, useState, useTransition } from 'react';
 
 import { postWorkoutComment, sendCoachHighFiveAction } from '../app/workout-actions';
+import { ExerciseGifFromRecord } from './exercise-gif';
 
 interface Props {
   workspaceId: string;
@@ -178,23 +179,29 @@ export function ActivityFeedStudio({
                       <div
                         key={se.id}
                         style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 12,
                           padding: '10px 14px',
                           background: 'var(--bg)',
                           border: '1px solid var(--border)',
                           borderRadius: 10,
                         }}
                       >
-                        <div style={{ fontWeight: 500, fontSize: 13.5, marginBottom: 4 }}>
-                          {se.exercise?.name}
-                        </div>
-                        <div className="mono muted" style={{ fontSize: 12 }}>
-                          {doneSets
-                            .map((st) =>
-                              st.actual_weight_value !== null
-                                ? `${st.actual_weight_value}${st.actual_weight_unit ?? 'kg'}×${st.actual_reps ?? 0}`
-                                : `${st.actual_reps ?? 0} reps`,
-                            )
-                            .join('  ·  ')}
+                        <ExerciseGifFromRecord exercise={se.exercise} size={40} />
+                        <div style={{ minWidth: 0 }}>
+                          <div style={{ fontWeight: 500, fontSize: 13.5, marginBottom: 4 }}>
+                            {se.exercise?.name}
+                          </div>
+                          <div className="mono muted" style={{ fontSize: 12 }}>
+                            {doneSets
+                              .map((st) =>
+                                st.actual_weight_value !== null
+                                  ? `${st.actual_weight_value}${st.actual_weight_unit ?? 'kg'}×${st.actual_reps ?? 0}`
+                                  : `${st.actual_reps ?? 0} reps`,
+                              )
+                              .join('  ·  ')}
+                          </div>
                         </div>
                       </div>
                     );

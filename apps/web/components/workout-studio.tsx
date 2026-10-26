@@ -37,6 +37,7 @@ import {
   requestInAppAccountDeletionAction,
   submitProblemReportAction,
 } from '../app/workout-actions';
+import { ExerciseGifFromRecord } from './exercise-gif';
 import { Form } from './form';
 import { MeasurementsPanel } from './measurements-panel';
 
@@ -649,21 +650,27 @@ export function WorkoutStudio({
                   <div
                     style={{
                       display: 'flex',
-                      alignItems: 'baseline',
+                      alignItems: 'center',
                       justifyContent: 'space-between',
+                      gap: 12,
                     }}
                   >
-                    <div>
-                      <h3 className="serif-md">{exBlock.exercise.name}</h3>
-                      <span
-                        className="muted"
-                        style={{
-                          fontSize: 12,
-                          textTransform: 'capitalize',
-                        }}
-                      >
-                        {exBlock.exercise.primary_muscle} · Rest {exBlock.restSeconds}s
-                      </span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 12, minWidth: 0 }}>
+                      <ExerciseGifFromRecord exercise={exBlock.exercise} size={48} />
+                      <div style={{ minWidth: 0 }}>
+                        <h3 className="serif-md" style={{ lineHeight: 1.25 }}>
+                          {exBlock.exercise.name}
+                        </h3>
+                        <span
+                          className="muted"
+                          style={{
+                            fontSize: 12,
+                            textTransform: 'capitalize',
+                          }}
+                        >
+                          {exBlock.exercise.primary_muscle} · Rest {exBlock.restSeconds}s
+                        </span>
+                      </div>
                     </div>
                     <button
                       type="button"
@@ -813,13 +820,16 @@ export function WorkoutStudio({
                       className="lux-row lux-row-interactive"
                       onClick={() => addExerciseToActive(ex)}
                     >
-                      <div>
-                        <div className="lux-row-title">{ex.name}</div>
-                        <div className="lux-row-sub" style={{ textTransform: 'capitalize' }}>
-                          {ex.primary_muscle} · {ex.equipment_id || 'Bodyweight'}
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 12, minWidth: 0 }}>
+                        <ExerciseGifFromRecord exercise={ex} size={42} />
+                        <div style={{ minWidth: 0 }}>
+                          <div className="lux-row-title">{ex.name}</div>
+                          <div className="lux-row-sub" style={{ textTransform: 'capitalize' }}>
+                            {ex.primary_muscle} · {ex.equipment_id || 'Bodyweight'}
+                          </div>
                         </div>
                       </div>
-                      <span className="muted" style={{ fontSize: 13 }}>
+                      <span className="muted" style={{ fontSize: 13, flexShrink: 0 }}>
                         + Add
                       </span>
                     </div>
@@ -1072,17 +1082,44 @@ export function WorkoutStudio({
 
                 <div
                   style={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    gap: '8px 20px',
-                    paddingTop: 8,
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
+                    gap: 10,
+                    paddingTop: 12,
                     borderTop: '1px solid var(--border)',
                   }}
                 >
                   {(nextProgramDay.items ?? []).map((item) => (
-                    <span key={item.id} className="muted" style={{ fontSize: 13.5 }}>
-                      {item.exercise?.name} · <span className="mono">{item.sets_count} sets</span>
-                    </span>
+                    <div
+                      key={item.id}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 10,
+                        padding: '8px 10px',
+                        background: 'rgba(10, 12, 16, 0.72)',
+                        border: '1px solid var(--border)',
+                        borderRadius: 10,
+                      }}
+                    >
+                      <ExerciseGifFromRecord exercise={item.exercise} size={38} />
+                      <div style={{ minWidth: 0 }}>
+                        <div
+                          style={{
+                            fontSize: 13,
+                            fontWeight: 600,
+                            color: 'var(--text)',
+                            lineHeight: 1.25,
+                          }}
+                        >
+                          {item.exercise?.name}
+                        </div>
+                        <div className="mono muted" style={{ fontSize: 11.5 }}>
+                          {item.sets_count} sets · {item.target_reps_min ?? 8}–
+                          {item.target_reps_max ?? 12} reps
+                        </div>
+                      </div>
+                    </div>
                   ))}
                 </div>
               </div>
@@ -1335,31 +1372,49 @@ export function WorkoutStudio({
                               flexDirection: 'column',
                             }}
                           >
-                            {day.items.map((it, idx) => (
-                              <div
-                                key={it.exerciseName}
-                                style={{
-                                  display: 'flex',
-                                  justifyContent: 'space-between',
-                                  alignItems: 'center',
-                                  gap: 12,
-                                  fontSize: 13.5,
-                                  padding: '7px 0',
-                                  borderTop: idx > 0 ? '1px solid var(--border)' : 'none',
-                                }}
-                              >
-                                <span style={{ fontWeight: 500 }}>{it.exerciseName}</span>
-                                <span
-                                  className="mono muted"
-                                  style={{ flexShrink: 0, fontSize: 12.5 }}
+                            {day.items.map((it, idx) => {
+                              const matchedEx = exerciseByName.get(it.exerciseName.toLowerCase());
+                              return (
+                                <div
+                                  key={it.exerciseName}
+                                  style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                    gap: 12,
+                                    fontSize: 13.5,
+                                    padding: '8px 0',
+                                    borderTop: idx > 0 ? '1px solid var(--border)' : 'none',
+                                  }}
                                 >
-                                  {it.setsCount} ×{' '}
-                                  {it.durationSeconds
-                                    ? `${it.durationSeconds}s`
-                                    : `${it.repsMin}–${it.repsMax}`}
-                                </span>
-                              </div>
-                            ))}
+                                  <div
+                                    style={{
+                                      display: 'flex',
+                                      alignItems: 'center',
+                                      gap: 10,
+                                      minWidth: 0,
+                                    }}
+                                  >
+                                    <ExerciseGifFromRecord
+                                      exercise={matchedEx ?? { name: it.exerciseName }}
+                                      size={40}
+                                    />
+                                    <span style={{ fontWeight: 500, lineHeight: 1.25 }}>
+                                      {it.exerciseName}
+                                    </span>
+                                  </div>
+                                  <span
+                                    className="mono muted"
+                                    style={{ flexShrink: 0, fontSize: 12.5 }}
+                                  >
+                                    {it.setsCount} ×{' '}
+                                    {it.durationSeconds
+                                      ? `${it.durationSeconds}s`
+                                      : `${it.repsMin}–${it.repsMax}`}
+                                  </span>
+                                </div>
+                              );
+                            })}
                           </div>
                         </div>
                       ))}
@@ -1505,19 +1560,32 @@ export function WorkoutStudio({
                                               justifyContent: 'space-between',
                                               alignItems: 'center',
                                               gap: 10,
-                                              padding: '7px 0',
+                                              padding: '8px 0',
                                               borderTop: idx > 0 ? '1px solid var(--border)' : 'none',
                                               fontSize: 13.5,
                                             }}
                                           >
-                                            <span>
-                                              {it.exercise?.name} ·{' '}
-                                              <span className="mono muted">
-                                                {it.sets_count} × {it.target_reps_min ?? 8}–
-                                                {it.target_reps_max ?? 12}
+                                            <div
+                                              style={{
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                gap: 10,
+                                                minWidth: 0,
+                                              }}
+                                            >
+                                              <ExerciseGifFromRecord
+                                                exercise={it.exercise}
+                                                size={40}
+                                              />
+                                              <span>
+                                                {it.exercise?.name} ·{' '}
+                                                <span className="mono muted">
+                                                  {it.sets_count} × {it.target_reps_min ?? 8}–
+                                                  {it.target_reps_max ?? 12}
+                                                </span>
                                               </span>
-                                            </span>
-                                          <button
+                                            </div>
+                                            <button
                                             type="button"
                                             className="btn ghost sm"
                                             disabled={isPending}
@@ -1648,19 +1716,30 @@ export function WorkoutStudio({
                               style={{
                                 display: 'flex',
                                 justifyContent: 'space-between',
+                                alignItems: 'center',
                                 gap: 12,
                                 fontSize: 13.5,
-                                padding: '6px 0',
+                                padding: '8px 0',
                                 borderTop: idx > 0 ? '1px solid var(--border)' : 'none',
                               }}
                             >
-                              <span>
-                                <span className="mono muted" style={{ marginRight: 8 }}>
-                                  {doneSets.length}×
+                              <div
+                                style={{
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  gap: 10,
+                                  minWidth: 0,
+                                }}
+                              >
+                                <ExerciseGifFromRecord exercise={se.exercise} size={36} />
+                                <span>
+                                  <span className="mono muted" style={{ marginRight: 8 }}>
+                                    {doneSets.length}×
+                                  </span>
+                                  {se.exercise?.name}
                                 </span>
-                                {se.exercise?.name}
-                              </span>
-                              <span className="mono muted">
+                              </div>
+                              <span className="mono muted" style={{ flexShrink: 0 }}>
                                 {best?.actual_weight_value !== null &&
                                 best?.actual_weight_value !== undefined
                                   ? `${best.actual_weight_value} ${best.actual_weight_unit ?? unit} × ${best.actual_reps ?? 0}`
@@ -1839,13 +1918,16 @@ export function WorkoutStudio({
                       });
                     }}
                   >
-                    <div>
-                      <div className="lux-row-title">{ex.name}</div>
-                      <div className="lux-row-sub" style={{ textTransform: 'capitalize' }}>
-                        {ex.primary_muscle}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 12, minWidth: 0 }}>
+                      <ExerciseGifFromRecord exercise={ex} size={42} />
+                      <div style={{ minWidth: 0 }}>
+                        <div className="lux-row-title">{ex.name}</div>
+                        <div className="lux-row-sub" style={{ textTransform: 'capitalize' }}>
+                          {ex.primary_muscle}
+                        </div>
                       </div>
                     </div>
-                    <span className="muted" style={{ fontSize: 13 }}>
+                    <span className="muted" style={{ fontSize: 13, flexShrink: 0 }}>
                       + Add
                     </span>
                   </div>

@@ -1265,3 +1265,289 @@ form.inline {
   color: var(--text-secondary);
   background: var(--bg-elevated);
 }
+
+/* ─── Animated Exercise GIF / Biomechanical Demo Thumbnails ─── */
+.gravn-gif-thumb {
+  appearance: none;
+  padding: 2px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(75% 75% at 50% 50%, rgba(255, 46, 31, 0.16) 0%, rgba(12, 14, 19, 0.98) 80%);
+  border: 1px solid var(--border-strong);
+  overflow: hidden;
+  flex-shrink: 0;
+  transition: border-color 0.14s ease, box-shadow 0.14s ease;
+}
+
+.gravn-gif-thumb:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 12px rgba(255, 46, 31, 0.25);
+}
+
+.gravn-gif-badge {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  font-family: var(--font-mono), monospace;
+  font-size: 7.5px;
+  font-weight: 800;
+  line-height: 1;
+  padding: 1.5px 3px;
+  border-radius: 3px;
+  background: rgba(8, 9, 12, 0.85);
+  color: var(--accent);
+  border: 1px solid rgba(255, 46, 31, 0.4);
+  letter-spacing: 0.04em;
+  pointer-events: none;
+}
+
+.gravn-muscle-glow {
+  filter: drop-shadow(0 0 4px rgba(255, 46, 31, 0.75));
+  animation: gravnPulseGlow 1.6s ease-in-out infinite alternate;
+}
+
+.gravn-gravity-ring {
+  transform-origin: 50px 86px;
+  animation: gravnRingPulse 1.6s ease-in-out infinite alternate;
+}
+
+.gravn-motion-squat {
+  animation: gravnSquatLoop 1.6s ease-in-out infinite alternate;
+}
+
+.gravn-motion-hinge {
+  transform-origin: 45px 57px;
+  animation: gravnHingeLoop 1.7s ease-in-out infinite alternate;
+}
+
+.gravn-motion-press-v {
+  animation: gravnPressVLoop 1.5s ease-in-out infinite alternate;
+}
+
+.gravn-motion-pushup {
+  transform-origin: 22px 78px;
+  animation: gravnPushupLoop 1.5s ease-in-out infinite alternate;
+}
+
+.gravn-motion-fly-l {
+  transform-origin: 46px 40px;
+  animation: gravnFlyLeftLoop 1.6s ease-in-out infinite alternate;
+}
+
+.gravn-motion-fly-r {
+  transform-origin: 54px 40px;
+  animation: gravnFlyRightLoop 1.6s ease-in-out infinite alternate;
+}
+
+.gravn-motion-pull-v {
+  animation: gravnPullVLoop 1.6s ease-in-out infinite alternate;
+}
+
+.gravn-motion-row-h {
+  animation: gravnRowHLoop 1.5s ease-in-out infinite alternate;
+}
+
+.gravn-motion-ohp {
+  animation: gravnOhpLoop 1.6s ease-in-out infinite alternate;
+}
+
+.gravn-motion-lat-l {
+  transform-origin: 42px 36px;
+  animation: gravnLatLeftLoop 1.5s ease-in-out infinite alternate;
+}
+
+.gravn-motion-lat-r {
+  transform-origin: 58px 36px;
+  animation: gravnLatRightLoop 1.5s ease-in-out infinite alternate;
+}
+
+.gravn-motion-curl {
+  transform-origin: 48px 52px;
+  animation: gravnCurlLoop 1.4s ease-in-out infinite alternate;
+}
+
+.gravn-motion-tricep {
+  transform-origin: 48px 50px;
+  animation: gravnTricepLoop 1.4s ease-in-out infinite alternate;
+}
+
+.gravn-motion-leg-ext {
+  transform-origin: 58px 56px;
+  animation: gravnLegExtLoop 1.5s ease-in-out infinite alternate;
+}
+
+.gravn-motion-calf {
+  animation: gravnCalfLoop 1.3s ease-in-out infinite alternate;
+}
+
+.gravn-motion-core {
+  transform-origin: 24px 74px;
+  animation: gravnCoreLoop 1.6s ease-in-out infinite alternate;
+}
+
+@keyframes gravnPulseGlow {
+  0% {
+    opacity: 0.72;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes gravnRingPulse {
+  0% {
+    transform: scaleX(0.92);
+    opacity: 0.45;
+  }
+  100% {
+    transform: scaleX(1.06);
+    opacity: 0.95;
+  }
+}
+
+@keyframes gravnSquatLoop {
+  0% {
+    transform: translateY(0px);
+  }
+  100% {
+    transform: translateY(13px);
+  }
+}
+
+@keyframes gravnHingeLoop {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(22deg);
+  }
+}
+
+@keyframes gravnPressVLoop {
+  0% {
+    transform: translateY(0px);
+  }
+  100% {
+    transform: translateY(14px);
+  }
+}
+
+@keyframes gravnPushupLoop {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(14deg);
+  }
+}
+
+@keyframes gravnFlyLeftLoop {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-28deg);
+  }
+}
+
+@keyframes gravnFlyRightLoop {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(28deg);
+  }
+}
+
+@keyframes gravnPullVLoop {
+  0% {
+    transform: translateY(0px);
+  }
+  100% {
+    transform: translateY(15px);
+  }
+}
+
+@keyframes gravnRowHLoop {
+  0% {
+    transform: translateX(0px);
+  }
+  100% {
+    transform: translateX(-14px);
+  }
+}
+
+@keyframes gravnOhpLoop {
+  0% {
+    transform: translateY(0px);
+  }
+  100% {
+    transform: translateY(15px);
+  }
+}
+
+@keyframes gravnLatLeftLoop {
+  0% {
+    transform: rotate(-32deg);
+  }
+  100% {
+    transform: rotate(12deg);
+  }
+}
+
+@keyframes gravnLatRightLoop {
+  0% {
+    transform: rotate(32deg);
+  }
+  100% {
+    transform: rotate(-12deg);
+  }
+}
+
+@keyframes gravnCurlLoop {
+  0% {
+    transform: rotate(38deg);
+  }
+  100% {
+    transform: rotate(-32deg);
+  }
+}
+
+@keyframes gravnTricepLoop {
+  0% {
+    transform: rotate(-42deg);
+  }
+  100% {
+    transform: rotate(22deg);
+  }
+}
+
+@keyframes gravnLegExtLoop {
+  0% {
+    transform: rotate(42deg);
+  }
+  100% {
+    transform: rotate(-8deg);
+  }
+}
+
+@keyframes gravnCalfLoop {
+  0% {
+    transform: translateY(0px);
+  }
+  100% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes gravnCoreLoop {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-12deg);
+  }
+}

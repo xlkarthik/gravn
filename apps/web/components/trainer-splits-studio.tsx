@@ -23,6 +23,7 @@ import {
   removeExerciseFromRoutineDay,
   unassignSplit,
 } from '../app/workout-actions';
+import { ExerciseGifFromRecord } from './exercise-gif';
 
 export interface SplitVersionDetail {
   id: string;
@@ -440,15 +441,15 @@ export function TrainerSplitsStudio({
                                 <span
                                   className="mono"
                                   style={{
-                                    width: 26,
-                                    height: 26,
-                                    borderRadius: 7,
+                                    width: 24,
+                                    height: 24,
+                                    borderRadius: 6,
                                     background: '#161922',
                                     border: '1px solid var(--border-strong)',
                                     display: 'inline-flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
-                                    fontSize: 11.5,
+                                    fontSize: 11,
                                     fontWeight: 700,
                                     color: 'var(--text-secondary)',
                                     flexShrink: 0,
@@ -456,6 +457,8 @@ export function TrainerSplitsStudio({
                                 >
                                   {String(idx + 1).padStart(2, '0')}
                                 </span>
+
+                                <ExerciseGifFromRecord exercise={item.exercise} size={46} />
 
                                 <div style={{ flex: 1, minWidth: 0 }}>
                                   <div
@@ -932,13 +935,16 @@ export function TrainerSplitsStudio({
                       });
                     }}
                   >
-                    <div>
-                      <div className="lux-row-title">{ex.name}</div>
-                      <div className="lux-row-sub" style={{ textTransform: 'capitalize' }}>
-                        {ex.primary_muscle}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 12, minWidth: 0 }}>
+                      <ExerciseGifFromRecord exercise={ex} size={42} />
+                      <div style={{ minWidth: 0 }}>
+                        <div className="lux-row-title">{ex.name}</div>
+                        <div className="lux-row-sub" style={{ textTransform: 'capitalize' }}>
+                          {ex.primary_muscle}
+                        </div>
                       </div>
                     </div>
-                    <span className="muted" style={{ fontSize: 13 }}>
+                    <span className="muted" style={{ fontSize: 13, flexShrink: 0 }}>
                       + Add
                     </span>
                   </div>
