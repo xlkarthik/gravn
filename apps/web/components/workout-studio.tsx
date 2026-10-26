@@ -677,13 +677,13 @@ export function WorkoutStudio({
                   <table className="lux-set-table">
                     <thead>
                       <tr>
-                        <th style={{ width: 48 }}>Set</th>
-                        <th>Previous</th>
-                        <th style={{ width: 104 }}>{unit.toUpperCase()}</th>
-                        <th style={{ width: 104 }}>
+                        <th style={{ width: 34 }}>Set</th>
+                        <th>Prev</th>
+                        <th style={{ width: 72, textAlign: 'center' }}>{unit.toUpperCase()}</th>
+                        <th style={{ width: 72, textAlign: 'center' }}>
                           {exBlock.exercise.tracking_type === 'time' ? 'Sec' : 'Reps'}
                         </th>
-                        <th style={{ width: 52, textAlign: 'right' }}>Done</th>
+                        <th style={{ width: 42, textAlign: 'right' }}>✓</th>
                       </tr>
                     </thead>
                     <tbody>

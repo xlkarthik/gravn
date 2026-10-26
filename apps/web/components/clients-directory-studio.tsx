@@ -243,8 +243,31 @@ export function ClientsDirectoryStudio({
             </div>
           ) : (
             <div className="lux-split-layout">
-              {/* Left Rail: Client List with Search (§3.3) */}
-              <div className="lux-surface-flush">
+              {/* Mobile Horizontal Client Selector (shown on <= 960px) */}
+              <div className="lux-mobile-rail">
+                <div className="lux-scroll-pills">
+                  {filteredMembers.map((m) => {
+                    const isSelected = selectedClient?.id === m.id;
+                    const mSessions = sessions.filter(
+                      (s) => s.user_id === m.user_id && s.status === 'completed',
+                    );
+                    const wk = countLast7Days(mSessions);
+                    return (
+                      <button
+                        key={m.id}
+                        type="button"
+                        className={`lux-pill ${isSelected ? 'active' : ''}`}
+                        onClick={() => setSelectedId(m.id)}
+                      >
+                        {displayName(m)} ({wk}/wk)
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Desktop Left Rail: Client List with Search (§3.3) */}
+              <div className="lux-surface-flush lux-desktop-rail">
                 <div
                   style={{
                     padding: '14px 18px',

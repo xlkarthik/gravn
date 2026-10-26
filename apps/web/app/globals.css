@@ -997,6 +997,20 @@ form.inline {
   gap: 6px;
 }
 
+.lux-scroll-pills {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.lux-scroll-pills::-webkit-scrollbar {
+  display: none;
+}
+
 .lux-pill {
   appearance: none;
   background: #13161c;
@@ -1007,6 +1021,8 @@ form.inline {
   font-size: 12.5px;
   font-weight: 600;
   cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
   transition: all 0.14s ease;
 }
 
@@ -1034,6 +1050,8 @@ form.inline {
   text-transform: uppercase;
   background: var(--accent-soft);
   color: var(--accent);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .lux-tag.subtle {
@@ -1049,14 +1067,32 @@ form.inline {
 /* ─── Two-Column Master-Detail Layout ─── */
 .lux-split-layout {
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: 280px 1fr;
   gap: 20px;
   align-items: start;
+}
+
+.lux-mobile-rail {
+  display: none;
+}
+
+.lux-desktop-rail {
+  display: block;
 }
 
 @media (max-width: 960px) {
   .lux-split-layout {
     grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .lux-mobile-rail {
+    display: block;
+    min-width: 0;
+  }
+
+  .lux-desktop-rail {
+    display: none;
   }
 }
 

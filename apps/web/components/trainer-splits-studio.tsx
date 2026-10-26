@@ -146,11 +146,15 @@ export function TrainerSplitsStudio({
           </p>
         </div>
 
-        <div style={{ display: 'flex', gap: 12 }}>
-          <button type="button" className="btn secondary" onClick={() => setShowPresetsModal(true)}>
+        <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+          <button
+            type="button"
+            className="btn secondary sm"
+            onClick={() => setShowPresetsModal(true)}
+          >
             Curated Splits ({SPLIT_TEMPLATES.length})
           </button>
-          <button type="button" className="btn" onClick={() => setShowNewSplitModal(true)}>
+          <button type="button" className="btn sm" onClick={() => setShowNewSplitModal(true)}>
             + New Custom Split
           </button>
         </div>
@@ -166,7 +170,7 @@ export function TrainerSplitsStudio({
               custom split from scratch.
             </p>
           </div>
-          <div style={{ display: 'flex', gap: 12 }}>
+          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
             <button type="button" className="btn" onClick={() => setShowPresetsModal(true)}>
               Browse Curated Splits
             </button>
@@ -181,9 +185,37 @@ export function TrainerSplitsStudio({
         </div>
       ) : (
         <div className="lux-split-layout">
-          {/* Left Rail: Workspace Splits */}
-          <div className="lux-surface-flush">
-            <div style={{ padding: '16px 22px', borderBottom: '1px solid var(--border)' }}>
+          {/* Mobile Horizontal Split Selector (only shown on <= 960px when > 1 split) */}
+          {versions.length > 1 && (
+            <div className="lux-mobile-rail">
+              <div className="lux-scroll-pills">
+                {versions.map((ver) => {
+                  const isSelected = activeVersion?.id === ver.id;
+                  const assignedCount = clients.filter(
+                    (c) => activeAssignmentByMember.get(c.id)?.program_version_id === ver.id,
+                  ).length;
+                  return (
+                    <button
+                      key={ver.id}
+                      type="button"
+                      className={`lux-pill ${isSelected ? 'active' : ''}`}
+                      onClick={() => {
+                        setSelectedVersionId(ver.id);
+                        setSelectedDayId('');
+                      }}
+                    >
+                      {ver.program.name} ({ver.days.length}d
+                      {assignedCount > 0 ? ` · ${assignedCount}` : ''})
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* Desktop Left Rail: Workspace Splits */}
+          <div className="lux-surface-flush lux-desktop-rail">
+            <div style={{ padding: '14px 18px', borderBottom: '1px solid var(--border)' }}>
               <span className="lux-label">Workspace Splits ({versions.length})</span>
             </div>
             <div className="lux-list">
@@ -229,34 +261,30 @@ export function TrainerSplitsStudio({
 
           {/* Right Detail Pane: Active Split Studio */}
           {activeVersion && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
               <div className="lux-surface">
+                {/* Split Header: Status Badge + Action on Top Row, Full-Width Title Below */}
                 <div
                   style={{
-                    display: 'flex',
-                    alignItems: 'flex-start',
-                    justifyContent: 'space-between',
-                    gap: 16,
-                    flexWrap: 'wrap',
-                    paddingBottom: 20,
+                    paddingBottom: 16,
                     borderBottom: '1px solid var(--border)',
                   }}
                 >
-                  <div>
-                    <span className="eyebrow">
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      gap: 10,
+                      marginBottom: 8,
+                    }}
+                  >
+                    <span className="lux-tag">
                       {activeVersion.status === 'published'
                         ? `Published · v${activeVersion.version_number}`
                         : `Editable Draft · v${activeVersion.version_number}`}
                     </span>
-                    <h2 className="serif-lg">{activeVersion.program.name}</h2>
-                    {activeVersion.program.description && (
-                      <p className="muted" style={{ marginTop: 4 }}>
-                        {activeVersion.program.description}
-                      </p>
-                    )}
-                  </div>
 
-                  <div>
                     {activeVersion.status === 'published' && (
                       <button
                         type="button"
@@ -269,34 +297,44 @@ export function TrainerSplitsStudio({
                           });
                         }}
                       >
-                        Create Editable Draft
+                        Edit as Draft
                       </button>
                     )}
                   </div>
+
+                  <h2 className="serif-lg">{activeVersion.program.name}</h2>
+                  {activeVersion.program.description && (
+                    <p className="muted" style={{ marginTop: 4, fontSize: 13.5 }}>
+                      {activeVersion.program.description}
+                    </p>
+                  )}
                 </div>
 
-                {/* Horizontal Day Tabs */}
+                {/* Horizontal Scrollable Day Tabs */}
                 <div
                   style={{
                     display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
+                    flexDirection: 'column',
                     gap: 12,
-                    flexWrap: 'wrap',
-                    paddingTop: 20,
+                    paddingTop: 16,
                   }}
                 >
-                  <div className="lux-pills">
-                    {sortedDays.map((day, idx) => (
-                      <button
-                        key={day.id}
-                        type="button"
-                        className={`lux-pill ${activeDay?.id === day.id ? 'active' : ''}`}
-                        onClick={() => setSelectedDayId(day.id)}
-                      >
-                        Day {idx + 1}: {day.title}
-                      </button>
-                    ))}
+                  <div className="lux-scroll-pills">
+                    {sortedDays.map((day, idx) => {
+                      const cleanLabel = /^day\s*\d+/i.test(day.title.trim())
+                        ? day.title.trim()
+                        : `Day ${idx + 1} • ${day.title}`;
+                      return (
+                        <button
+                          key={day.id}
+                          type="button"
+                          className={`lux-pill ${activeDay?.id === day.id ? 'active' : ''}`}
+                          onClick={() => setSelectedDayId(day.id)}
+                        >
+                          {cleanLabel}
+                        </button>
+                      );
+                    })}
                     {activeVersion.status === 'draft' && (
                       <button
                         type="button"
@@ -311,9 +349,9 @@ export function TrainerSplitsStudio({
                     )}
                   </div>
 
-                  {activeDay && (
-                    <div style={{ display: 'flex', gap: 8 }}>
-                      {activeVersion.status === 'draft' && sortedDays.length > 1 && (
+                  {activeDay && activeVersion.status === 'draft' && (
+                    <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
+                      {sortedDays.length > 1 && (
                         <button
                           type="button"
                           className="btn ghost sm"
@@ -329,28 +367,26 @@ export function TrainerSplitsStudio({
                           Remove Day
                         </button>
                       )}
-                      {activeVersion.status === 'draft' && (
-                        <button
-                          type="button"
-                          className="btn sm"
-                          onClick={() => {
-                            setSearchQuery('');
-                            setMuscleFilter('all');
-                            setShowMovementModal(true);
-                          }}
-                        >
-                          + Add Movement
-                        </button>
-                      )}
+                      <button
+                        type="button"
+                        className="btn sm"
+                        onClick={() => {
+                          setSearchQuery('');
+                          setMuscleFilter('all');
+                          setShowMovementModal(true);
+                        }}
+                      >
+                        + Add Movement
+                      </button>
                     </div>
                   )}
                 </div>
 
-                {/* Active Day Movements Table */}
+                {/* Active Day Movements — Premium Mobile-First Exercise Card Rows */}
                 {activeDay && (
-                  <div style={{ marginTop: 24 }}>
+                  <div style={{ marginTop: 16 }}>
                     {(activeDay.items ?? []).length === 0 ? (
-                      <div className="empty" style={{ padding: '36px 24px' }}>
+                      <div className="empty" style={{ padding: '28px 20px' }}>
                         <p className="muted" style={{ marginBottom: 14 }}>
                           No movements scheduled on {activeDay.title} yet.
                         </p>
@@ -369,60 +405,149 @@ export function TrainerSplitsStudio({
                         )}
                       </div>
                     ) : (
-                      <table className="lux-set-table">
-                        <thead>
-                          <tr>
-                            <th style={{ width: 44 }}>#</th>
-                            <th>Movement</th>
-                            <th style={{ width: 140 }}>Sets × Reps</th>
-                            <th style={{ width: 100 }}>Rest</th>
-                            <th style={{ width: 80, textAlign: 'right' }} />
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {[...(activeDay.items ?? [])]
-                            .sort((a, b) => a.position - b.position)
-                            .map((item, idx) => (
-                              <tr key={item.id}>
-                                <td className="mono muted">{idx + 1}</td>
-                                <td>
-                                  <div style={{ fontWeight: 500 }}>
+                      <div
+                        style={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          gap: 8,
+                        }}
+                      >
+                        {[...(activeDay.items ?? [])]
+                          .sort((a, b) => a.position - b.position)
+                          .map((item, idx) => (
+                            <div
+                              key={item.id}
+                              style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                gap: 12,
+                                padding: '12px 14px',
+                                background: '#0c0e13',
+                                border: '1px solid var(--border)',
+                                borderRadius: 12,
+                              }}
+                            >
+                              <div
+                                style={{
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  gap: 12,
+                                  flex: 1,
+                                  minWidth: 0,
+                                }}
+                              >
+                                <span
+                                  className="mono"
+                                  style={{
+                                    width: 26,
+                                    height: 26,
+                                    borderRadius: 7,
+                                    background: '#161922',
+                                    border: '1px solid var(--border-strong)',
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    fontSize: 11.5,
+                                    fontWeight: 700,
+                                    color: 'var(--text-secondary)',
+                                    flexShrink: 0,
+                                  }}
+                                >
+                                  {String(idx + 1).padStart(2, '0')}
+                                </span>
+
+                                <div style={{ flex: 1, minWidth: 0 }}>
+                                  <div
+                                    style={{
+                                      fontWeight: 600,
+                                      fontSize: 14.5,
+                                      color: 'var(--text)',
+                                      lineHeight: 1.3,
+                                    }}
+                                  >
                                     {item.exercise?.name ?? 'Movement'}
                                   </div>
-                                  {item.superset_group && (
-                                    <span className="lux-tag subtle">
-                                      Superset {item.superset_group}
-                                    </span>
-                                  )}
-                                </td>
-                                <td className="mono">
+                                  <div
+                                    style={{
+                                      display: 'flex',
+                                      alignItems: 'center',
+                                      flexWrap: 'wrap',
+                                      gap: 8,
+                                      marginTop: 3,
+                                      fontSize: 12,
+                                      color: 'var(--text-secondary)',
+                                    }}
+                                  >
+                                    <span className="mono">Rest {item.rest_seconds}s</span>
+                                    {item.target_weight_value !== null && (
+                                      <span className="mono">
+                                        · {item.target_weight_value} {item.target_weight_unit ?? 'kg'}
+                                      </span>
+                                    )}
+                                    {item.superset_group && (
+                                      <span
+                                        style={{
+                                          color: 'var(--accent)',
+                                          fontWeight: 700,
+                                          fontSize: 11,
+                                          letterSpacing: '0.04em',
+                                          textTransform: 'uppercase',
+                                        }}
+                                      >
+                                        · Superset {item.superset_group}
+                                      </span>
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div
+                                style={{
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  gap: 8,
+                                  flexShrink: 0,
+                                }}
+                              >
+                                <span
+                                  className="mono"
+                                  style={{
+                                    background: '#161922',
+                                    border: '1px solid var(--border-strong)',
+                                    padding: '5px 10px',
+                                    borderRadius: 8,
+                                    fontSize: 13,
+                                    fontWeight: 700,
+                                    color: 'var(--text)',
+                                    whiteSpace: 'nowrap',
+                                  }}
+                                >
                                   {item.sets_count} ×{' '}
                                   {item.target_duration_s
                                     ? `${item.target_duration_s}s`
                                     : `${item.target_reps_min ?? 8}–${item.target_reps_max ?? 12}`}
-                                </td>
-                                <td className="mono muted">{item.rest_seconds}s</td>
-                                <td style={{ textAlign: 'right' }}>
-                                  {activeVersion.status === 'draft' && (
-                                    <button
-                                      type="button"
-                                      className="btn ghost sm"
-                                      disabled={isPending}
-                                      onClick={() => {
-                                        startTransition(async () => {
-                                          await removeExerciseFromRoutineDay(item.id, workspaceId);
-                                          router.refresh();
-                                        });
-                                      }}
-                                    >
-                                      Remove
-                                    </button>
-                                  )}
-                                </td>
-                              </tr>
-                            ))}
-                        </tbody>
-                      </table>
+                                </span>
+
+                                {activeVersion.status === 'draft' && (
+                                  <button
+                                    type="button"
+                                    className="btn ghost sm"
+                                    disabled={isPending}
+                                    onClick={() => {
+                                      startTransition(async () => {
+                                        await removeExerciseFromRoutineDay(item.id, workspaceId);
+                                        router.refresh();
+                                      });
+                                    }}
+                                  >
+                                    ×
+                                  </button>
+                                )}
+                              </div>
+                            </div>
+                          ))}
+                      </div>
                     )}
                   </div>
                 )}
