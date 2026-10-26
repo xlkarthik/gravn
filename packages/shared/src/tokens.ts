@@ -1,20 +1,20 @@
-// Design tokens for Gravn: Clean Light Athletic palette (Hevy / Strava / Apple Fitness) —
-// crisp off-white canvas (#F7F8FA), pure white cards (#FFFFFF), deep slate ink (#0F172A),
-// and high-contrast electric cobalt blue (#2563EB).
+// Design tokens for Gravn: Refined Athletic Light palette —
+// warm alabaster canvas (#F3F4F6), pure white cards (#FFFFFF), deep carbon ink (#111827),
+// carbon primary CTAs (#111827), and electric indigo highlights (#4F46E5).
 
 export const colors = {
-  bg: '#F7F8FA',
+  bg: '#F3F4F6',
   surface: '#FFFFFF',
-  surfaceRaised: '#F1F5F9',
-  border: '#E2E8F0',
-  borderStrong: '#CBD5E1',
-  text: '#0F172A',
-  textMuted: '#64748B',
-  accent: '#2563EB',
+  surfaceRaised: '#F9FAFB',
+  border: '#E5E7EB',
+  borderStrong: '#D1D5DB',
+  text: '#111827',
+  textMuted: '#6B7280',
+  accent: '#4F46E5',
   onAccent: '#FFFFFF',
   danger: '#DC2626',
-  success: '#16A34A',
-  warning: '#D97706',
+  success: '#10B981',
+  warning: '#F59E0B',
 } as const;
 
 export const space = { xs: 4, sm: 8, md: 12, lg: 16, xl: 24, xxl: 32, xxxl: 48 } as const;

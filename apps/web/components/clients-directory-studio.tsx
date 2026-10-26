@@ -447,12 +447,13 @@ export function ClientsDirectoryStudio({
                           <div
                             style={{
                               display: 'flex',
-                              alignItems: 'center',
+                              alignItems: 'flex-start',
                               justifyContent: 'space-between',
-                              gap: 16,
+                              gap: 12,
+                              flexWrap: 'wrap',
                             }}
                           >
-                            <div>
+                            <div style={{ flex: 1, minWidth: 180 }}>
                               <span className="eyebrow">Facility Access</span>
                               <h3 className="serif-md">Physical Gym Membership</h3>
                               {(() => {

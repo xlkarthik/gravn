@@ -122,23 +122,24 @@ export function ActivityFeedStudio({
                     display: 'flex',
                     alignItems: 'flex-start',
                     justifyContent: 'space-between',
-                    gap: 16,
-                    paddingBottom: 16,
+                    gap: 12,
+                    flexWrap: 'wrap',
+                    paddingBottom: 14,
                     borderBottom: '1px solid var(--border)',
                   }}
                 >
-                  <div>
+                  <div style={{ flex: 1, minWidth: 160 }}>
                     <span className="eyebrow" style={{ marginBottom: 4 }}>
                       {client ? displayName(client) : 'Member'} · {dateStr}
                     </span>
                     <h3 className="serif-lg">{session.title}</h3>
                   </div>
 
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
                     {summary.prsEarned > 0 && (
                       <span className="lux-tag pr">{summary.prsEarned} PR</span>
                     )}
-                    <span className="mono muted" style={{ fontSize: 13 }}>
+                    <span className="mono muted" style={{ fontSize: 12.5 }}>
                       {Math.round(summary.totalVolumeKg).toLocaleString()} kg ·{' '}
                       {summary.completedSets} sets
                     </span>
@@ -215,7 +216,7 @@ export function ActivityFeedStudio({
                       key={c.id}
                       style={{
                         fontSize: 13.5,
-                        background: 'rgba(212, 175, 122, 0.06)',
+                        background: 'var(--accent-soft)',
                         borderLeft: '2px solid var(--accent)',
                         padding: '8px 14px',
                         borderRadius: '0 8px 8px 0',

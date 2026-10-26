@@ -508,14 +508,15 @@ export function TrainerSplitsStudio({
                       background: 'var(--bg)',
                       border: '1px solid var(--border)',
                       borderRadius: 12,
-                      padding: '18px 20px',
+                      padding: 16,
                       display: 'flex',
-                      alignItems: 'center',
+                      alignItems: 'flex-start',
                       justifyContent: 'space-between',
-                      gap: 16,
+                      gap: 12,
+                      flexWrap: 'wrap',
                     }}
                   >
-                    <div>
+                    <div style={{ flex: 1, minWidth: 180 }}>
                       <span className="eyebrow" style={{ marginBottom: 2 }}>
                         {tpl.daysPerWeek} Days / Wk · {tpl.tag}
                       </span>
@@ -527,6 +528,7 @@ export function TrainerSplitsStudio({
                     <button
                       type="button"
                       className="btn sm"
+                      style={{ flexShrink: 0 }}
                       disabled={isPending}
                       onClick={() => {
                         startTransition(async () => {

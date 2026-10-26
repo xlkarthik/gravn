@@ -840,25 +840,29 @@ export function WorkoutStudio({
     <div className="lux-member-shell">
       <header className="lux-topbar">
         <div className="lux-topbar-inner">
-          <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
             <span className="wordmark">GRAVN</span>
-            {otherWorkspaces.map((w) => {
-              const isStaffWs = w.roles.includes('owner') || w.roles.includes('trainer');
-              const href = isStaffWs ? `/w/${w.id}` : `/home?ws=${w.id}`;
-              return (
-                <Link
-                  key={w.id}
-                  href={href}
-                  className="lux-pill"
-                  style={{ fontSize: 12, padding: '5px 12px' }}
-                >
-                  ← {w.type === 'personal' ? 'Personal Studio' : w.name}
-                </Link>
-              );
-            })}
+            {otherWorkspaces.length > 0 && (
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                {otherWorkspaces.map((w) => {
+                  const isStaffWs = w.roles.includes('owner') || w.roles.includes('trainer');
+                  const href = isStaffWs ? `/w/${w.id}` : `/home?ws=${w.id}`;
+                  return (
+                    <Link
+                      key={w.id}
+                      href={href}
+                      className="lux-pill"
+                      style={{ fontSize: 12, padding: '5px 12px' }}
+                    >
+                      {w.type === 'personal' ? 'Personal Studio' : w.name} →
+                    </Link>
+                  );
+                })}
+              </div>
+            )}
           </div>
 
-          <nav className="lux-tabbar" aria-label="Primary Navigation">
+          <nav className="lux-tabbar lux-tabbar-desktop" aria-label="Primary Navigation">
             <button
               type="button"
               className={`lux-tab ${tab === 'workout' ? 'active' : ''}`}
@@ -1046,10 +1050,11 @@ export function WorkoutStudio({
                     display: 'flex',
                     alignItems: 'flex-start',
                     justifyContent: 'space-between',
-                    gap: 16,
+                    gap: 12,
+                    flexWrap: 'wrap',
                   }}
                 >
-                  <div>
+                  <div style={{ flex: 1, minWidth: 180 }}>
                     <span className="eyebrow">
                       Assigned Split · {activeAssignment.program_version?.program?.name}
                     </span>
@@ -1058,6 +1063,7 @@ export function WorkoutStudio({
                   <button
                     type="button"
                     className="btn lg"
+                    style={{ flexShrink: 0 }}
                     onClick={() => startFromProgramDay(nextProgramDay, activeAssignment.id)}
                   >
                     Begin Session
@@ -1234,24 +1240,24 @@ export function WorkoutStudio({
                 </div>
 
                 {selectedPreset && (
-                  <div className="lux-surface" style={{ padding: 32 }}>
+                  <div className="lux-surface">
                     <div
                       style={{
                         display: 'flex',
                         alignItems: 'flex-start',
                         justifyContent: 'space-between',
-                        gap: 16,
+                        gap: 12,
                         flexWrap: 'wrap',
-                        paddingBottom: 24,
+                        paddingBottom: 16,
                         borderBottom: '1px solid var(--border)',
                       }}
                     >
-                      <div>
+                      <div style={{ flex: 1, minWidth: 200 }}>
                         <span className="eyebrow">
                           {selectedPreset.daysPerWeek} Days / Week · {selectedPreset.tag}
                         </span>
                         <h2 className="serif-lg">{selectedPreset.name}</h2>
-                        <p className="muted" style={{ marginTop: 6, maxWidth: 520 }}>
+                        <p className="muted" style={{ marginTop: 4, fontSize: 13.5 }}>
                           {selectedPreset.description}
                         </p>
                       </div>
@@ -1259,7 +1265,7 @@ export function WorkoutStudio({
                       {isPersonal && (
                         <button
                           type="button"
-                          className="btn"
+                          className="btn sm"
                           disabled={isPending}
                           onClick={() => {
                             startTransition(async () => {
@@ -1273,7 +1279,7 @@ export function WorkoutStudio({
                             });
                           }}
                         >
-                          {isPending ? 'Saving…' : 'Adopt This Split'}
+                          {isPending ? 'Saving…' : 'Adopt Split'}
                         </button>
                       )}
                     </div>
@@ -1282,8 +1288,8 @@ export function WorkoutStudio({
                       style={{
                         display: 'flex',
                         flexDirection: 'column',
-                        gap: 16,
-                        marginTop: 24,
+                        gap: 12,
+                        marginTop: 16,
                       }}
                     >
                       {selectedPreset.days.map((day, dIdx) => (
@@ -1293,52 +1299,60 @@ export function WorkoutStudio({
                             background: 'var(--bg)',
                             border: '1px solid var(--border)',
                             borderRadius: 12,
-                            padding: '20px 24px',
+                            padding: 16,
                           }}
                         >
                           <div
                             style={{
                               display: 'flex',
-                              alignItems: 'center',
+                              alignItems: 'flex-start',
                               justifyContent: 'space-between',
-                              marginBottom: 12,
+                              gap: 12,
+                              marginBottom: 10,
                             }}
                           >
-                            <div>
+                            <div style={{ flex: 1, minWidth: 0 }}>
                               <span className="eyebrow" style={{ marginBottom: 2 }}>
                                 Day {dIdx + 1}
                               </span>
-                              <h3 className="serif-md">{day.title}</h3>
+                              <h3 className="serif-md" style={{ lineHeight: 1.3 }}>
+                                {day.title}
+                              </h3>
                             </div>
                             <button
                               type="button"
                               className="btn secondary sm"
+                              style={{ flexShrink: 0 }}
                               onClick={() => startFromPresetDay(selectedPreset, day)}
                             >
-                              Begin Day {dIdx + 1}
+                              Start Day {dIdx + 1}
                             </button>
                           </div>
 
                           <div
                             style={{
-                              display: 'grid',
-                              gridTemplateColumns: 'repeat(auto-fill, minmax(210px, 1fr))',
-                              gap: '8px 20px',
+                              display: 'flex',
+                              flexDirection: 'column',
                             }}
                           >
-                            {day.items.map((it) => (
+                            {day.items.map((it, idx) => (
                               <div
                                 key={it.exerciseName}
                                 style={{
                                   display: 'flex',
                                   justifyContent: 'space-between',
+                                  alignItems: 'center',
+                                  gap: 12,
                                   fontSize: 13.5,
-                                  padding: '4px 0',
-                                  borderBottom: '1px solid rgba(255,255,255,0.04)',
+                                  padding: '7px 0',
+                                  borderTop: idx > 0 ? '1px solid var(--border)' : 'none',
                                 }}
                               >
-                                <span>{it.exerciseName}</span>
-                                <span className="mono muted">
+                                <span style={{ fontWeight: 500 }}>{it.exerciseName}</span>
+                                <span
+                                  className="mono muted"
+                                  style={{ flexShrink: 0, fontSize: 12.5 }}
+                                >
                                   {it.setsCount} ×{' '}
                                   {it.durationSeconds
                                     ? `${it.durationSeconds}s`
@@ -1433,73 +1447,76 @@ export function WorkoutStudio({
                                     padding: 18,
                                   }}
                                 >
-                                  <div
-                                    style={{
-                                      display: 'flex',
-                                      justifyContent: 'space-between',
-                                      alignItems: 'center',
-                                      marginBottom: 12,
-                                    }}
-                                  >
-                                    <div>
-                                      <span className="eyebrow" style={{ marginBottom: 2 }}>
-                                        Day {dIdx + 1}
-                                      </span>
-                                      <strong style={{ fontSize: 15 }}>{day.title}</strong>
-                                    </div>
-                                    <div style={{ display: 'flex', gap: 8 }}>
-                                      <button
-                                        type="button"
-                                        className="btn ghost sm"
-                                        onClick={() => {
-                                          setSearchQuery('');
-                                          setMuscleFilter('all');
-                                          setPickerModal({
-                                            mode: 'routine-day',
-                                            dayId: day.id,
-                                            nextPos: sortedItems.length + 1,
-                                          });
-                                        }}
-                                      >
-                                        + Add Movement
-                                      </button>
-                                      <button
-                                        type="button"
-                                        className="btn sm"
-                                        onClick={() => startFromProgramDay(day, null)}
-                                      >
-                                        Start
-                                      </button>
-                                    </div>
-                                  </div>
-
-                                  {sortedItems.length === 0 ? (
-                                    <p className="muted" style={{ fontSize: 13 }}>
-                                      No movements added yet.
-                                    </p>
-                                  ) : (
-                                    <div
-                                      style={{ display: 'flex', flexDirection: 'column', gap: 6 }}
+                                   <div
+                                      style={{
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'flex-start',
+                                        gap: 12,
+                                        flexWrap: 'wrap',
+                                        marginBottom: 12,
+                                      }}
                                     >
-                                      {sortedItems.map((it) => (
-                                        <div
-                                          key={it.id}
-                                          style={{
-                                            display: 'flex',
-                                            justifyContent: 'space-between',
-                                            alignItems: 'center',
-                                            padding: '6px 0',
-                                            borderBottom: '1px solid rgba(255,255,255,0.04)',
-                                            fontSize: 13.5,
+                                      <div style={{ flex: 1, minWidth: 160 }}>
+                                        <span className="eyebrow" style={{ marginBottom: 2 }}>
+                                          Day {dIdx + 1}
+                                        </span>
+                                        <strong style={{ fontSize: 15 }}>{day.title}</strong>
+                                      </div>
+                                      <div style={{ display: 'flex', gap: 8, flexShrink: 0 }}>
+                                        <button
+                                          type="button"
+                                          className="btn ghost sm"
+                                          onClick={() => {
+                                            setSearchQuery('');
+                                            setMuscleFilter('all');
+                                            setPickerModal({
+                                              mode: 'routine-day',
+                                              dayId: day.id,
+                                              nextPos: sortedItems.length + 1,
+                                            });
                                           }}
                                         >
-                                          <span>
-                                            {it.exercise?.name} ·{' '}
-                                            <span className="mono muted">
-                                              {it.sets_count} × {it.target_reps_min ?? 8}–
-                                              {it.target_reps_max ?? 12}
+                                          + Movement
+                                        </button>
+                                        <button
+                                          type="button"
+                                          className="btn sm"
+                                          onClick={() => startFromProgramDay(day, null)}
+                                        >
+                                          Start
+                                        </button>
+                                      </div>
+                                    </div>
+
+                                    {sortedItems.length === 0 ? (
+                                      <p className="muted" style={{ fontSize: 13 }}>
+                                        No movements added yet.
+                                      </p>
+                                    ) : (
+                                      <div
+                                        style={{ display: 'flex', flexDirection: 'column' }}
+                                      >
+                                        {sortedItems.map((it, idx) => (
+                                          <div
+                                            key={it.id}
+                                            style={{
+                                              display: 'flex',
+                                              justifyContent: 'space-between',
+                                              alignItems: 'center',
+                                              gap: 10,
+                                              padding: '7px 0',
+                                              borderTop: idx > 0 ? '1px solid var(--border)' : 'none',
+                                              fontSize: 13.5,
+                                            }}
+                                          >
+                                            <span>
+                                              {it.exercise?.name} ·{' '}
+                                              <span className="mono muted">
+                                                {it.sets_count} × {it.target_reps_min ?? 8}–
+                                                {it.target_reps_max ?? 12}
+                                              </span>
                                             </span>
-                                          </span>
                                           <button
                                             type="button"
                                             className="btn ghost sm"
@@ -1620,8 +1637,8 @@ export function WorkoutStudio({
                         </div>
                       </div>
 
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                        {(session.exercises ?? []).map((se) => {
+                      <div style={{ display: 'flex', flexDirection: 'column' }}>
+                        {(session.exercises ?? []).map((se, idx) => {
                           const doneSets = (se.sets ?? []).filter((st) => st.state === 'completed');
                           if (doneSets.length === 0) return null;
                           const best = doneSets[0];
@@ -1631,9 +1648,10 @@ export function WorkoutStudio({
                               style={{
                                 display: 'flex',
                                 justifyContent: 'space-between',
+                                gap: 12,
                                 fontSize: 13.5,
-                                padding: '4px 0',
-                                borderBottom: '1px solid rgba(255,255,255,0.03)',
+                                padding: '6px 0',
+                                borderTop: idx > 0 ? '1px solid var(--border)' : 'none',
                               }}
                             >
                               <span>
@@ -2014,6 +2032,72 @@ export function WorkoutStudio({
           </div>
         </div>
       )}
+
+      <nav className="lux-tabbar lux-tabbar-mobile" aria-label="Bottom Navigation">
+        <button
+          type="button"
+          className={`lux-tab ${tab === 'workout' ? 'active' : ''}`}
+          onClick={() => setTab('workout')}
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="m6.5 6.5 11 11" />
+            <path d="m21 21-1-1" />
+            <path d="m3 3 1 1" />
+            <path d="m18 22 4-4" />
+            <path d="m2 6 4-4" />
+            <path d="m3 10 7-7" />
+            <path d="m14 21 7-7" />
+          </svg>
+          <span>Workout</span>
+        </button>
+        <button
+          type="button"
+          className={`lux-tab ${tab === 'routines' ? 'active' : ''}`}
+          onClick={() => setTab('routines')}
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <rect width="7" height="7" x="3" y="3" rx="1" />
+            <rect width="7" height="7" x="14" y="3" rx="1" />
+            <rect width="7" height="7" x="14" y="14" rx="1" />
+            <rect width="7" height="7" x="3" y="14" rx="1" />
+          </svg>
+          <span>Splits</span>
+        </button>
+        <button
+          type="button"
+          className={`lux-tab ${tab === 'progress' ? 'active' : ''}`}
+          onClick={() => setTab('progress')}
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M3 3v18h18" />
+            <path d="m19 9-5 5-4-4-3 3" />
+          </svg>
+          <span>Progress</span>
+        </button>
+        <button
+          type="button"
+          className={`lux-tab ${tab === 'history' ? 'active' : ''}`}
+          onClick={() => setTab('history')}
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+            <path d="M3 3v5h5" />
+            <path d="M12 7v5l4 2" />
+          </svg>
+          <span>History</span>
+        </button>
+        <button
+          type="button"
+          className={`lux-tab ${tab === 'profile' ? 'active' : ''}`}
+          onClick={() => setTab('profile')}
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="12" cy="8" r="5" />
+            <path d="M20 21a8 8 0 0 0-16 0" />
+          </svg>
+          <span>Profile</span>
+        </button>
+      </nav>
     </div>
   );
 }
