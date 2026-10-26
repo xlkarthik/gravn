@@ -10,7 +10,7 @@ const variant = VARIANTS[process.env.APP_VARIANT as keyof typeof VARIANTS] ?? VA
 
 // D-01: permanent once published to a store.
 const APP_ID = `app.gravn.mobile${variant.suffix}`;
-const BACKGROUND = '#0B0B0C'; // colors.bg in packages/shared/src/tokens.ts
+const BACKGROUND = '#F7F8FA'; // colors.bg in packages/shared/src/tokens.ts
 
 export default (): ExpoConfig => ({
   name: variant.name,
@@ -19,7 +19,7 @@ export default (): ExpoConfig => ({
   orientation: 'portrait',
   icon: './assets/icon.png',
   scheme: variant.scheme,
-  userInterfaceStyle: 'dark',
+  userInterfaceStyle: 'light',
   backgroundColor: BACKGROUND,
   ios: {
     bundleIdentifier: APP_ID,

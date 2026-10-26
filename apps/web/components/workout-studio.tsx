@@ -864,35 +864,63 @@ export function WorkoutStudio({
               className={`lux-tab ${tab === 'workout' ? 'active' : ''}`}
               onClick={() => setTab('workout')}
             >
-              Workout
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="m6.5 6.5 11 11" />
+                <path d="m21 21-1-1" />
+                <path d="m3 3 1 1" />
+                <path d="m18 22 4-4" />
+                <path d="m2 6 4-4" />
+                <path d="m3 10 7-7" />
+                <path d="m14 21 7-7" />
+              </svg>
+              <span>Workout</span>
             </button>
             <button
               type="button"
               className={`lux-tab ${tab === 'routines' ? 'active' : ''}`}
               onClick={() => setTab('routines')}
             >
-              Splits
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <rect width="7" height="7" x="3" y="3" rx="1" />
+                <rect width="7" height="7" x="14" y="3" rx="1" />
+                <rect width="7" height="7" x="14" y="14" rx="1" />
+                <rect width="7" height="7" x="3" y="14" rx="1" />
+              </svg>
+              <span>Splits</span>
             </button>
             <button
               type="button"
               className={`lux-tab ${tab === 'progress' ? 'active' : ''}`}
               onClick={() => setTab('progress')}
             >
-              Progress
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M3 3v18h18" />
+                <path d="m19 9-5 5-4-4-3 3" />
+              </svg>
+              <span>Progress</span>
             </button>
             <button
               type="button"
               className={`lux-tab ${tab === 'history' ? 'active' : ''}`}
               onClick={() => setTab('history')}
             >
-              History
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+                <path d="M3 3v5h5" />
+                <path d="M12 7v5l4 2" />
+              </svg>
+              <span>History</span>
             </button>
             <button
               type="button"
               className={`lux-tab ${tab === 'profile' ? 'active' : ''}`}
               onClick={() => setTab('profile')}
             >
-              Profile
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="8" r="5" />
+                <path d="M20 21a8 8 0 0 0-16 0" />
+              </svg>
+              <span>Profile</span>
             </button>
           </nav>
         </div>

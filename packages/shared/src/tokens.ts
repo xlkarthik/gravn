@@ -1,24 +1,25 @@
-// Design tokens for Gravn: Warm Luxury Athletic palette — deep warm obsidian & espresso
-// surfaces (#0F0E0C / #171513), warm ivory text (#F4F0EA), and brushed champagne (#D4AF7A).
+// Design tokens for Gravn: Clean Light Athletic palette (Hevy / Strava / Apple Fitness) —
+// crisp off-white canvas (#F7F8FA), pure white cards (#FFFFFF), deep slate ink (#0F172A),
+// and high-contrast electric cobalt blue (#2563EB).
 
 export const colors = {
-  bg: '#0F0E0C',
-  surface: '#171513',
-  surfaceRaised: '#211E1B',
-  border: '#292521',
-  borderStrong: '#463F38',
-  text: '#F4F0EA',
-  textMuted: '#9E9589',
-  accent: '#D4AF7A',
-  onAccent: '#12100E',
-  danger: '#D4726A',
-  success: '#8FB583',
-  warning: '#D9A760',
+  bg: '#F7F8FA',
+  surface: '#FFFFFF',
+  surfaceRaised: '#F1F5F9',
+  border: '#E2E8F0',
+  borderStrong: '#CBD5E1',
+  text: '#0F172A',
+  textMuted: '#64748B',
+  accent: '#2563EB',
+  onAccent: '#FFFFFF',
+  danger: '#DC2626',
+  success: '#16A34A',
+  warning: '#D97706',
 } as const;
 
 export const space = { xs: 4, sm: 8, md: 12, lg: 16, xl: 24, xxl: 32, xxxl: 48 } as const;
 
-export const radius = { sm: 6, md: 10, lg: 14, pill: 999 } as const;
+export const radius = { sm: 8, md: 12, lg: 16, pill: 999 } as const;
 
 export const fontSize = { xs: 12, sm: 14, md: 16, lg: 20, xl: 24, xxl: 32 } as const;
 

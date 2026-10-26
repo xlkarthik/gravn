@@ -236,7 +236,7 @@ export function MeasurementsPanel({
                 y1="24"
                 x2="612"
                 y2="24"
-                stroke="rgba(255,255,255,0.05)"
+                stroke="var(--border)"
                 strokeDasharray="4 4"
               />
               <line
@@ -244,7 +244,7 @@ export function MeasurementsPanel({
                 y1="90"
                 x2="612"
                 y2="90"
-                stroke="rgba(255,255,255,0.05)"
+                stroke="var(--border)"
                 strokeDasharray="4 4"
               />
               <line
@@ -252,7 +252,7 @@ export function MeasurementsPanel({
                 y1="156"
                 x2="612"
                 y2="156"
-                stroke="rgba(255,255,255,0.05)"
+                stroke="var(--border)"
                 strokeDasharray="4 4"
               />
 
