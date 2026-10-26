@@ -17,24 +17,39 @@ export default async function WorkspaceStudioPage({
   const owner = isOwner(ws);
   const client = await api();
 
-  const [people, programs, exercises, gymMemberships, measurementDefs, streaks, user] =
-    await Promise.all([
-      fetchPeople(client, id),
-      client.programs(id),
-      client.exercises(),
-      ws.type === 'gym' && owner ? client.gymMemberships(id).catch(() => []) : Promise.resolve([]),
-      client.measurementDefinitions().catch(() => []),
-      client.streaks(id).catch(() => []),
-      getUser(),
-    ]);
+  // Single parallel batch — no sequential N+1 waterfalls!
+  const [
+    people,
+    programs,
+    exercises,
+    gymMemberships,
+    measurementDefs,
+    allMeasurementEntries,
+    streaks,
+    user,
+  ] = await Promise.all([
+    fetchPeople(client, id),
+    client.programs(id),
+    client.exercises(),
+    ws.type === 'gym' && owner ? client.gymMemberships(id).catch(() => []) : Promise.resolve([]),
+    client.measurementDefinitions().catch(() => []),
+    client.workspaceMeasurementEntries(id).catch(() => []),
+    client.streaks(id).catch(() => []),
+    getUser(),
+  ]);
 
-  const versionDetails = await Promise.all(
-    programs.map(async (p) => {
-      const latest = [...(p.versions ?? [])].sort((a, b) => b.version_number - a.version_number)[0];
-      if (!latest) return null;
-      return client.programVersion(latest.id);
-    }),
-  );
+  const [versionDetails, highFives] = await Promise.all([
+    Promise.all(
+      programs.map(async (p) => {
+        const latest = [...(p.versions ?? [])].sort(
+          (a, b) => b.version_number - a.version_number,
+        )[0];
+        if (!latest) return null;
+        return client.programVersion(latest.id);
+      }),
+    ),
+    client.highFivesForSessions(people.sessions.map((s) => s.id)).catch(() => []),
+  ]);
 
   const versions: SplitVersionDetail[] = versionDetails.filter(
     (v): v is NonNullable<typeof v> => v !== null,
@@ -48,18 +63,10 @@ export default async function WorkspaceStudioPage({
     trainerLinksByMember[m.id] = people.trainersOf(m.id);
   }
 
-  const [measurementEntriesPairs, highFives] = await Promise.all([
-    Promise.all(
-      people.members.map(async (m) => {
-        const entries = await client.measurementEntries(m.user_id, id).catch(() => []);
-        return [m.user_id, entries] as const;
-      }),
-    ),
-    client.highFivesForSessions(people.sessions.map((s) => s.id)).catch(() => []),
-  ]);
-
-  const measurementEntriesByUser: Record<string, MeasurementEntry[]> =
-    Object.fromEntries(measurementEntriesPairs);
+  const measurementEntriesByUser: Record<string, MeasurementEntry[]> = {};
+  for (const entry of allMeasurementEntries) {
+    (measurementEntriesByUser[entry.subject_user_id] ??= []).push(entry);
+  }
 
   const validTabs = ['overview', 'members', 'programs', 'activity', 'more'] as const;
   const initialTab = validTabs.includes(tab as (typeof validTabs)[number])

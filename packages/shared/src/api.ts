@@ -641,6 +641,15 @@ export function gravnApi(sb: SupabaseClient) {
       if (workspaceId) q = q.eq('workspace_id', workspaceId);
       return must<MeasurementEntry[]>(q);
     },
+    workspaceMeasurementEntries: (workspaceId: string) =>
+      must<MeasurementEntry[]>(
+        sb
+          .from('measurement_entries')
+          .select('*')
+          .eq('workspace_id', workspaceId)
+          .order('measured_on', { ascending: false })
+          .limit(300),
+      ),
     recordMeasurement: (input: {
       subjectUserId: string;
       workspaceId: string | null;
