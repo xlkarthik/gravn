@@ -1,27 +1,27 @@
-/* Gravn — Refined Athletic Mobile Design System (Apple Fitness / Nike Training / Hevy) */
+/* Gravn — Obsidian Titanium & Laser Crimson Design System (GRAVITY / BUILDS / INTENSITY) */
 
 :root {
-  --bg: #f3f4f6;
-  --bg-elevated: #ffffff;
-  --bg-hover: #f9fafb;
-  --bg-subtle: #f8fafc;
-  --border: #e5e7eb;
-  --border-strong: #d1d5db;
-  --text: #111827;
-  --text-secondary: #4b5563;
-  --text-muted: #6b7280;
-  --accent: #4f46e5;
-  --accent-hover: #4338ca;
-  --accent-soft: #eef2ff;
-  --accent-border: #c7d2fe;
-  --primary-btn: #111827;
-  --primary-btn-hover: #1f2937;
+  --bg: #08090c;
+  --bg-elevated: #111318;
+  --bg-hover: #181b22;
+  --bg-subtle: #151820;
+  --border: #222630;
+  --border-strong: #2f3543;
+  --text: #f3f5f8;
+  --text-secondary: #9ca3b0;
+  --text-muted: #68707e;
+  --accent: #ff2e1f;
+  --accent-hover: #ff4738;
+  --accent-soft: rgba(255, 46, 31, 0.14);
+  --accent-border: rgba(255, 46, 31, 0.38);
+  --primary-btn: linear-gradient(135deg, #ff3828 0%, #d91b0e 100%);
+  --primary-btn-hover: linear-gradient(135deg, #ff4b3d 0%, #e82417 100%);
   --on-accent: #ffffff;
-  --success: #059669;
-  --success-soft: #ecfdf5;
-  --danger: #dc2626;
-  --danger-soft: #fef2f2;
-  --warning: #d97706;
+  --success: #10b981;
+  --success-soft: rgba(16, 185, 129, 0.14);
+  --danger: #ff453a;
+  --danger-soft: rgba(255, 69, 58, 0.14);
+  --warning: #f59e0b;
 }
 
 *,
@@ -37,6 +37,7 @@ body {
   padding: 0;
   background: var(--bg);
   color: var(--text);
+  color-scheme: dark;
   font-family:
     var(--font-sans),
     -apple-system,
@@ -102,7 +103,7 @@ p {
   font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.07em;
+  letter-spacing: 0.08em;
   color: var(--accent);
   display: block;
   margin-bottom: 4px;
@@ -114,13 +115,27 @@ p {
 }
 
 .wordmark {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font-family: var(--font-sans), sans-serif;
   font-weight: 800;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.22em;
   font-size: 14px;
-  color: var(--text);
+  background: linear-gradient(180deg, #ffffff 0%, #9ca3b0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   text-transform: uppercase;
+}
+
+.wordmark::after {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+  display: inline-block;
 }
 
 /* ─── Auth & Centered Pages ─── */
@@ -131,19 +146,21 @@ p {
   align-items: center;
   justify-content: center;
   padding: 24px 16px;
-  background: var(--bg);
+  background:
+    radial-gradient(60% 50% at 50% 0%, rgba(255, 46, 31, 0.12) 0%, rgba(8, 9, 12, 0) 70%),
+    var(--bg);
 }
 
 .card {
   width: 100%;
   max-width: 400px;
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
+  background: linear-gradient(180deg, #151820 0%, #101217 100%);
+  border: 1px solid var(--border-strong);
   border-radius: 20px;
   padding: 32px 24px;
   box-shadow:
-    0 10px 25px -5px rgba(17, 24, 39, 0.06),
-    0 4px 10px -2px rgba(17, 24, 39, 0.04);
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 20px 50px rgba(0, 0, 0, 0.65);
 }
 
 .card .wordmark {
@@ -156,15 +173,17 @@ p {
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  background: var(--bg);
+  background:
+    radial-gradient(80% 40% at 50% 0%, rgba(255, 46, 31, 0.07) 0%, rgba(8, 9, 12, 0) 65%),
+    var(--bg);
 }
 
 .lux-topbar {
   position: sticky;
   top: 0;
   z-index: 30;
-  background: rgba(255, 255, 255, 0.94);
-  backdrop-filter: blur(16px);
+  background: rgba(8, 9, 12, 0.88);
+  backdrop-filter: blur(18px);
   border-bottom: 1px solid var(--border);
   padding-top: env(safe-area-inset-top, 0px);
 }
@@ -185,7 +204,7 @@ p {
   display: flex;
   align-items: center;
   gap: 4px;
-  background: var(--bg);
+  background: #0d0f13;
   padding: 4px;
   border-radius: 12px;
   border: 1px solid var(--border);
@@ -225,10 +244,10 @@ p {
 }
 
 .lux-tab.active {
-  color: var(--text);
-  background: var(--bg-elevated);
+  color: #ffffff;
+  background: var(--bg-hover);
   font-weight: 700;
-  box-shadow: 0 1px 3px rgba(17, 24, 39, 0.1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
 .lux-main {
@@ -251,14 +270,14 @@ p {
     left: 0;
     right: 0;
     z-index: 50;
-    background: rgba(255, 255, 255, 0.96);
-    backdrop-filter: blur(18px);
+    background: rgba(12, 14, 18, 0.94);
+    backdrop-filter: blur(20px);
     border: 0;
-    border-top: 1px solid var(--border);
+    border-top: 1px solid var(--border-strong);
     border-radius: 0;
     padding: 6px 8px calc(8px + env(safe-area-inset-bottom, 0px));
     justify-content: space-around;
-    box-shadow: 0 -4px 20px rgba(17, 24, 39, 0.05);
+    box-shadow: 0 -8px 28px rgba(0, 0, 0, 0.65);
   }
 
   .lux-tab {
@@ -290,8 +309,8 @@ p {
   position: sticky;
   top: 0;
   z-index: 40;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(16px);
+  background: rgba(8, 9, 12, 0.92);
+  backdrop-filter: blur(18px);
   border-bottom: 1px solid var(--border);
   padding: calc(10px + env(safe-area-inset-top, 0px)) 16px 10px;
 }
@@ -320,11 +339,13 @@ p {
   min-height: 100dvh;
   display: grid;
   grid-template-columns: 240px 1fr;
-  background: var(--bg);
+  background:
+    radial-gradient(70% 35% at 60% 0%, rgba(255, 46, 31, 0.06) 0%, rgba(8, 9, 12, 0) 65%),
+    var(--bg);
 }
 
 .sidebar {
-  background: var(--bg-elevated);
+  background: #0d0f14;
   border-right: 1px solid var(--border);
   padding: 24px 16px;
   display: flex;
@@ -397,7 +418,7 @@ p {
 .sidebar nav a:hover,
 .sidebar-tab-btn:hover {
   color: var(--text);
-  background: var(--bg);
+  background: var(--bg-hover);
 }
 
 .sidebar nav a[aria-current='page'],
@@ -450,8 +471,8 @@ p {
     align-items: center;
     justify-content: space-between;
     padding: calc(10px + env(safe-area-inset-top, 0px)) 16px 10px;
-    background: rgba(255, 255, 255, 0.94);
-    backdrop-filter: blur(16px);
+    background: rgba(8, 9, 12, 0.88);
+    backdrop-filter: blur(18px);
     border-bottom: 1px solid var(--border);
   }
 
@@ -463,11 +484,11 @@ p {
     z-index: 50;
     display: flex;
     justify-content: space-around;
-    background: rgba(255, 255, 255, 0.96);
-    backdrop-filter: blur(18px);
-    border-top: 1px solid var(--border);
+    background: rgba(12, 14, 18, 0.94);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid var(--border-strong);
     padding: 6px 6px calc(8px + env(safe-area-inset-bottom, 0px));
-    box-shadow: 0 -4px 20px rgba(17, 24, 39, 0.05);
+    box-shadow: 0 -8px 28px rgba(0, 0, 0, 0.65);
   }
 
   .mobile-ws-bottomnav button,
@@ -499,34 +520,40 @@ p {
   }
 }
 
-/* ─── Elevated Surfaces & Cards ─── */
+/* ─── Elevated Brushed Gunmetal Surfaces & Cards ─── */
 .lux-hero-card {
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
+  background:
+    radial-gradient(120% 120% at 100% 0%, rgba(255, 46, 31, 0.11) 0%, rgba(17, 19, 24, 0) 60%),
+    linear-gradient(180deg, #161921 0%, #111318 100%);
+  border: 1px solid var(--border-strong);
   border-radius: 18px;
   padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 16px;
   box-shadow:
-    0 4px 12px -2px rgba(17, 24, 39, 0.06),
-    0 2px 6px -1px rgba(17, 24, 39, 0.04);
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 12px 32px rgba(0, 0, 0, 0.45);
 }
 
 .lux-surface {
-  background: var(--bg-elevated);
+  background: linear-gradient(180deg, #14171e 0%, #101217 100%);
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: 18px 20px;
-  box-shadow: 0 2px 6px rgba(17, 24, 39, 0.04);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 6px 20px rgba(0, 0, 0, 0.35);
 }
 
 .lux-surface-flush {
-  background: var(--bg-elevated);
+  background: linear-gradient(180deg, #14171e 0%, #101217 100%);
   border: 1px solid var(--border);
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 2px 6px rgba(17, 24, 39, 0.04);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 6px 20px rgba(0, 0, 0, 0.35);
 }
 
 .lux-divider {
@@ -551,14 +578,16 @@ p {
 }
 
 .lux-stat {
-  background: var(--bg-elevated);
+  background: linear-gradient(180deg, #14171e 0%, #101217 100%);
   border: 1px solid var(--border);
   border-radius: 14px;
   padding: 14px 16px;
   display: flex;
   flex-direction: column;
   gap: 4px;
-  box-shadow: 0 1px 3px rgba(17, 24, 39, 0.03);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 4px 14px rgba(0, 0, 0, 0.3);
 }
 
 .lux-stat-label {
@@ -624,7 +653,7 @@ p {
   margin-top: 2px;
 }
 
-/* ─── High-Contrast Carbon & Indigo Buttons ─── */
+/* ─── Laser Crimson & Brushed Titanium Buttons ─── */
 .btn,
 .button {
   appearance: none;
@@ -635,7 +664,7 @@ p {
   min-height: 40px;
   padding: 0 18px;
   border-radius: 11px;
-  border: 1px solid transparent;
+  border: 1px solid rgba(255, 110, 96, 0.42);
   font-family: var(--font-sans), sans-serif;
   font-size: 13.5px;
   font-weight: 700;
@@ -645,12 +674,17 @@ p {
   transition: all 0.14s ease;
   white-space: nowrap;
   flex-shrink: 0;
-  box-shadow: 0 1px 2px rgba(17, 24, 39, 0.08);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 4px 16px rgba(255, 46, 31, 0.28);
 }
 
 .btn:hover:not(:disabled),
 .button:hover:not(:disabled) {
   background: var(--primary-btn-hover);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    0 6px 22px rgba(255, 46, 31, 0.38);
 }
 
 .btn:active:not(:disabled),
@@ -666,22 +700,22 @@ p {
 
 .btn.secondary,
 .button.secondary {
-  background: var(--bg-elevated);
+  background: #181b22;
   color: var(--text);
   border-color: var(--border-strong);
   font-weight: 600;
-  box-shadow: 0 1px 2px rgba(17, 24, 39, 0.04);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .btn.secondary:hover:not(:disabled),
 .button.secondary:hover:not(:disabled) {
-  background: var(--bg);
-  border-color: var(--text);
+  background: #20242e;
+  border-color: var(--text-secondary);
 }
 
 .btn.ghost,
 .button.ghost {
-  background: var(--bg);
+  background: #13161c;
   color: var(--text-secondary);
   border-color: var(--border);
   padding: 0 12px;
@@ -701,7 +735,7 @@ p {
 .button.danger {
   background: var(--danger-soft);
   color: var(--danger);
-  border-color: rgba(220, 38, 38, 0.25);
+  border-color: rgba(255, 69, 58, 0.32);
   font-weight: 600;
   box-shadow: none;
 }
@@ -766,7 +800,7 @@ form.inline {
   padding: 0 14px;
   border-radius: 10px;
   border: 1px solid var(--border-strong);
-  background: var(--bg-elevated);
+  background: #0d0f14;
   color: var(--text);
   font-family: var(--font-sans), sans-serif;
   font-size: 14.5px;
@@ -808,7 +842,7 @@ form.inline {
   padding: 0 12px;
   border-radius: 10px;
   border: 1px solid var(--border-strong);
-  background: var(--bg);
+  background: #0d0f14;
   color: var(--text);
   font-family: var(--font-mono), monospace;
   font-size: 12.5px;
@@ -816,14 +850,16 @@ form.inline {
 
 /* ─── Tabular Set Logger ─── */
 .lux-exercise-block {
-  background: var(--bg-elevated);
+  background: linear-gradient(180deg, #14171e 0%, #101217 100%);
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: 16px;
   display: flex;
   flex-direction: column;
   gap: 12px;
-  box-shadow: 0 2px 6px rgba(17, 24, 39, 0.04);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 6px 20px rgba(0, 0, 0, 0.35);
 }
 
 .lux-set-table {
@@ -859,7 +895,7 @@ form.inline {
 .lux-num-input {
   width: 74px;
   height: 36px;
-  background: var(--bg);
+  background: #0b0d11;
   border: 1px solid var(--border-strong);
   border-radius: 8px;
   color: var(--text);
@@ -872,7 +908,7 @@ form.inline {
 .lux-num-input:focus {
   outline: none;
   border-color: var(--accent);
-  background: var(--bg-elevated);
+  background: #12151c;
 }
 
 .lux-check-btn {
@@ -880,7 +916,7 @@ form.inline {
   height: 34px;
   border-radius: 9px;
   border: 1px solid var(--border-strong);
-  background: var(--bg);
+  background: #0b0d11;
   color: var(--text-muted);
   display: inline-flex;
   align-items: center;
@@ -901,8 +937,8 @@ form.inline {
   position: fixed;
   inset: 0;
   z-index: 100;
-  background: rgba(17, 24, 39, 0.45);
-  backdrop-filter: blur(4px);
+  background: rgba(4, 5, 8, 0.72);
+  backdrop-filter: blur(6px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -913,13 +949,13 @@ form.inline {
   width: 100%;
   max-width: 520px;
   max-height: 86dvh;
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
+  background: linear-gradient(180deg, #161921 0%, #101217 100%);
+  border: 1px solid var(--border-strong);
   border-radius: 20px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  box-shadow: 0 24px 64px rgba(17, 24, 39, 0.22);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.75);
 }
 
 @media (max-width: 640px) {
@@ -963,7 +999,7 @@ form.inline {
 
 .lux-pill {
   appearance: none;
-  background: var(--bg-elevated);
+  background: #13161c;
   border: 1px solid var(--border-strong);
   color: var(--text-secondary);
   padding: 6px 13px;
@@ -976,14 +1012,15 @@ form.inline {
 
 .lux-pill:hover {
   color: var(--text);
-  border-color: var(--text);
+  border-color: var(--text-secondary);
 }
 
 .lux-pill.active {
-  background: var(--primary-btn);
-  border-color: var(--primary-btn);
+  background: var(--accent-soft);
+  border-color: var(--accent);
   color: #ffffff;
   font-weight: 700;
+  box-shadow: 0 0 14px rgba(255, 46, 31, 0.22);
 }
 
 .lux-tag {
@@ -1000,7 +1037,7 @@ form.inline {
 }
 
 .lux-tag.subtle {
-  background: var(--bg);
+  background: var(--bg-subtle);
   color: var(--text-secondary);
 }
 
@@ -1025,7 +1062,7 @@ form.inline {
 
 /* ─── Legacy Compatibility Classes ─── */
 .panel {
-  background: var(--bg-elevated);
+  background: linear-gradient(180deg, #14171e 0%, #101217 100%);
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: 18px 20px;
@@ -1053,7 +1090,7 @@ form.inline {
 }
 
 .stat {
-  background: var(--bg-elevated);
+  background: linear-gradient(180deg, #14171e 0%, #101217 100%);
   border: 1px solid var(--border);
   border-radius: 14px;
   padding: 16px;
@@ -1078,7 +1115,7 @@ form.inline {
   list-style: none;
   margin: 0;
   padding: 0;
-  background: var(--bg-elevated);
+  background: linear-gradient(180deg, #14171e 0%, #101217 100%);
   border: 1px solid var(--border);
   border-radius: 16px;
   overflow: hidden;

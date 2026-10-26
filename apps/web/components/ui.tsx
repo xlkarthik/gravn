@@ -4,13 +4,17 @@ import type { ReactNode } from 'react';
 
 export function Wordmark({ height = 20 }: { height?: number }) {
   return (
-    <Image
-      src="/wordmark.png"
-      alt="Gravn"
-      width={Math.round(height * 6.75)}
-      height={height}
-      priority
-    />
+    <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10 }}>
+      <Image
+        src="/icon.png"
+        alt="Gravn"
+        width={Math.round(height * 1.4)}
+        height={Math.round(height * 1.4)}
+        style={{ borderRadius: 6, objectFit: 'cover' }}
+        priority
+      />
+      <span className="wordmark">GRAVN</span>
+    </div>
   );
 }
 
@@ -19,8 +23,37 @@ export function Card({ title, children }: { title: string; children: ReactNode }
   return (
     <main className="center">
       <div className="card">
-        <Wordmark />
-        <h1>{title}</h1>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            textAlign: 'center',
+            marginBottom: 24,
+          }}
+        >
+          <Image
+            src="/icon.png"
+            alt="GRAVN — Gravity Builds Intensity"
+            width={116}
+            height={116}
+            style={{ borderRadius: 16, objectFit: 'cover', marginBottom: 8 }}
+            priority
+          />
+          <div
+            style={{
+              fontSize: 10,
+              fontWeight: 700,
+              letterSpacing: '0.26em',
+              textTransform: 'uppercase',
+              color: 'var(--text-secondary)',
+            }}
+          >
+            GRAVITY &nbsp;/&nbsp; BUILDS &nbsp;/&nbsp;{' '}
+            <span style={{ color: 'var(--accent)' }}>INTENSITY</span>
+          </div>
+        </div>
+        <h1 style={{ textAlign: 'center', marginBottom: 18 }}>{title}</h1>
         {children}
       </div>
     </main>

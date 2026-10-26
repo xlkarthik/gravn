@@ -1,18 +1,18 @@
-// Design tokens for Gravn: Refined Athletic Light palette —
-// warm alabaster canvas (#F3F4F6), pure white cards (#FFFFFF), deep carbon ink (#111827),
-// carbon primary CTAs (#111827), and electric indigo highlights (#4F46E5).
+// Design tokens for Gravn: Obsidian Titanium & Laser Crimson (`GRAVITY / BUILDS / INTENSITY`) —
+// pitch obsidian void (#08090C), machined gunmetal cards (#111318), platinum silver text (#F3F5F8),
+// and laser crimson intensity accents (#FF2E1F).
 
 export const colors = {
-  bg: '#F3F4F6',
-  surface: '#FFFFFF',
-  surfaceRaised: '#F9FAFB',
-  border: '#E5E7EB',
-  borderStrong: '#D1D5DB',
-  text: '#111827',
-  textMuted: '#6B7280',
-  accent: '#4F46E5',
+  bg: '#08090C',
+  surface: '#111318',
+  surfaceRaised: '#181B22',
+  border: '#222630',
+  borderStrong: '#2F3543',
+  text: '#F3F5F8',
+  textMuted: '#9CA3B0',
+  accent: '#FF2E1F',
   onAccent: '#FFFFFF',
-  danger: '#DC2626',
+  danger: '#FF453A',
   success: '#10B981',
   warning: '#F59E0B',
 } as const;
