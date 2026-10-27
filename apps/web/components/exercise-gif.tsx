@@ -91,21 +91,172 @@ interface ThumbProps {
   interactive?: boolean;
 }
 
-export function resolveHumanGifUrl(name: string, demoUrl?: string | null): string | null {
-  const n = name.toLowerCase();
-  if (n.includes('incline') && (n.includes('bench') || n.includes('press'))) {
-    return '/exercises/incline-bench-press.gif';
-  }
-  if (n.includes('bench press') || n.includes('dumbbell press') || n.includes('chest press')) {
-    return '/exercises/flat-bench-press.gif';
-  }
+export function resolveHumanGifUrl(
+  name: string,
+  demoUrl?: string | null,
+  primaryMuscle?: string,
+): string | null {
   if (
     demoUrl &&
     (demoUrl.startsWith('http://') || demoUrl.startsWith('https://') || demoUrl.startsWith('/'))
   ) {
     return demoUrl;
   }
-  return null;
+
+  const n = name.toLowerCase();
+
+  // Chest / Pressing
+  if (n.includes('incline') && (n.includes('bench') || n.includes('press') || n.includes('fly'))) {
+    return '/exercises/incline-bench-press.gif';
+  }
+  if (
+    n.includes('bench press') ||
+    n.includes('dumbbell press') ||
+    n.includes('chest press') ||
+    n.includes('push-up') ||
+    n.includes('pushup') ||
+    n.includes('chest fly') ||
+    n.includes('pec deck')
+  ) {
+    return '/exercises/flat-bench-press.gif';
+  }
+
+  // Quads / Squats / Lunges / Leg Press
+  if (n.includes('front squat') || n.includes('hack squat')) {
+    return '/exercises/hack-squat.gif';
+  }
+  if (n.includes('split squat') || n.includes('lunge') || n.includes('step-up')) {
+    return '/exercises/lunges.gif';
+  }
+  if (n.includes('leg press') || n.includes('leg extension')) {
+    return '/exercises/leg-press.gif';
+  }
+  if (n.includes('squat')) {
+    return '/exercises/squat.gif';
+  }
+
+  // Posterior Chain / Hinge
+  if (
+    n.includes('deadlift') ||
+    n.includes('hip thrust') ||
+    n.includes('glute bridge') ||
+    n.includes('pull-through') ||
+    n.includes('swing') ||
+    n.includes('good morning')
+  ) {
+    return '/exercises/deadlift.gif';
+  }
+
+  // Triceps & Straight-Arm Pulldown (check before generic pulldown/curl)
+  if (
+    n.includes('straight-arm') ||
+    n.includes('tricep pushdown') ||
+    n.includes('pressdown') ||
+    n.includes('parallel bar dip') ||
+    n.includes('dip')
+  ) {
+    return '/exercises/tricep-pushdown.gif';
+  }
+  if (n.includes('skullcrusher') || n.includes('tricep extension') || n.includes('tricep')) {
+    return '/exercises/tricep-extension.gif';
+  }
+
+  // Vertical Pull
+  if (
+    n.includes('pull-up') ||
+    n.includes('pullup') ||
+    n.includes('chin-up') ||
+    n.includes('chinup') ||
+    n.includes('pulldown')
+  ) {
+    return '/exercises/pull-ups.gif';
+  }
+
+  // Horizontal Row & Rear Delts
+  if (
+    n.includes('cable row') ||
+    n.includes('machine row') ||
+    n.includes('face pull') ||
+    n.includes('reverse pec') ||
+    n.includes('rear delt')
+  ) {
+    return '/exercises/cable-row.gif';
+  }
+  if (n.includes('row')) {
+    return '/exercises/bent-over-row.gif';
+  }
+
+  // Shoulders
+  if (
+    n.includes('shoulder press') ||
+    n.includes('overhead') ||
+    n.includes('military press') ||
+    n.includes('lateral raise') ||
+    n.includes('front raise')
+  ) {
+    return '/exercises/shoulder-press.gif';
+  }
+
+  // Biceps vs Leg Curl
+  if (n.includes('leg curl') || n.includes('hamstring curl')) {
+    return '/exercises/leg-raises.gif';
+  }
+  if (n.includes('bicep') || n.includes('curl')) {
+    return '/exercises/bicep-curl.gif';
+  }
+
+  // Calves
+  if (n.includes('calf') || n.includes('calves')) {
+    return '/exercises/calf-raise.gif';
+  }
+
+  // Carries & Core
+  if (n.includes('farmer') || n.includes('carry') || n.includes('walk')) {
+    return '/exercises/farmers-walk.gif';
+  }
+  if (n.includes('knee raise') || n.includes('crunch') || n.includes('sit-up')) {
+    return '/exercises/hanging-crunches.gif';
+  }
+  if (
+    n.includes('leg raise') ||
+    n.includes('dead bug') ||
+    n.includes('plank') ||
+    n.includes('ab ') ||
+    n.includes('core')
+  ) {
+    return '/exercises/leg-raises.gif';
+  }
+
+  // Fallback by movement pattern so every exercise displays a real human demo
+  const pattern = classifyExercisePattern(name, primaryMuscle);
+  switch (pattern) {
+    case 'squat':
+      return '/exercises/squat.gif';
+    case 'hinge':
+      return '/exercises/deadlift.gif';
+    case 'bench':
+    case 'pushup':
+    case 'fly':
+      return '/exercises/flat-bench-press.gif';
+    case 'vertical_pull':
+      return '/exercises/pull-ups.gif';
+    case 'horizontal_row':
+      return '/exercises/bent-over-row.gif';
+    case 'overhead_press':
+    case 'lateral_raise':
+      return '/exercises/shoulder-press.gif';
+    case 'curl':
+      return '/exercises/bicep-curl.gif';
+    case 'tricep_ext':
+      return '/exercises/tricep-pushdown.gif';
+    case 'leg_ext_curl':
+      return '/exercises/leg-press.gif';
+    case 'calf':
+      return '/exercises/calf-raise.gif';
+    case 'core':
+    default:
+      return '/exercises/hanging-crunches.gif';
+  }
 }
 
 export function ExerciseGif({
@@ -120,7 +271,7 @@ export function ExerciseGif({
   const [openModal, setOpenModal] = useState(false);
   const [imgFailed, setImgFailed] = useState(false);
 
-  const resolvedGifUrl = resolveHumanGifUrl(name, demoUrl);
+  const resolvedGifUrl = resolveHumanGifUrl(name, demoUrl, primaryMuscle);
   const hasCustomGif = Boolean(resolvedGifUrl) && !imgFailed;
 
   const pattern = classifyExercisePattern(name, primaryMuscle);
